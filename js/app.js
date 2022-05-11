@@ -72,7 +72,6 @@ Quagga.onDetected(async function (r) {
     document.getElementById("cameramodal").style.display = "none";
     Quagga.stop();
     var x = await Book(r);
-    fer = true;
     let img = document.getElementById("igerite");
     img.src = x.cover;
     document.getElementById("title").innerHTML = x.title;
