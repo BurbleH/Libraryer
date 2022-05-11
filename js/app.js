@@ -68,7 +68,7 @@ scabot.onclick = function () {
   });
 };
 Quagga.onDetected(async function (r) {
-  if (r.codeResult.code > 9780000000000 && r.codeResult.code < 9800000000000 && !fer) {
+  if ((r.codeResult.code > 9780000000000 && r.codeResult.code < 9800000000000 && !fer) || r.codeResult.code<1000000000) {
     document.getElementById("cameramodal").style.display = "none";
     Quagga.stop();
     var x = await Book(r);
