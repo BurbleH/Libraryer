@@ -103,7 +103,7 @@ const Book = async (data) => {
   var obj = await thing.json();
   obj = obj["ISBN:" + self.isbn + ""];
   end.title = obj.title;
-  if(!obj.author){end.author = "unknown";}else{end.author = obj.authors[0].name;}
+  if(!obj.author){end.author = "Unknown";}else{end.author = obj.authors[0].name;}
   if (!obj.cover){end.cover=""}else{  end.cover = obj.cover.medium;
 }
 
