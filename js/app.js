@@ -104,7 +104,6 @@ const Book = async (data) => {
   obj = obj["ISBN:" + self.isbn + ""];
   end.title = obj.title;
   end.author = obj.authors[0].name;
-  end.cover = obj.cover.medium;
   if (!obj.cover){end.cover=""}else{  end.cover = obj.cover.medium;
 }
 
