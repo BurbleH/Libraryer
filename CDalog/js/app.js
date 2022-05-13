@@ -41,6 +41,16 @@ function dostuff() {
       localStorage.setItem("a", JSON.stringify(st));
       dostuff();
     });
+
+    let sa=document.getElementById("save");
+    let curbul = new Blob([JSON.stringify(st, null, 2)], {type : 'application/json'});
+    let curbulink = URL.createObjectURL(curbul);
+    sa.onClick = function(){
+      let lin = document.createElement("a");
+      lin.href = curbulink;
+      lin.download="cds.json";
+      lin.click();
+    }
     
     iger.src = st[i].cover;
     iger.width = 150;
@@ -126,4 +136,5 @@ const CD = async (data) => {
 
 
 }
+
 dostuff();
