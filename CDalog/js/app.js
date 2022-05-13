@@ -21,17 +21,16 @@ function dostuff() {
 
   var et = document.getElementById('booklist');
   st.sort(function (a, b) {
-    let x = a.title.toUpperCase(),
-      y = b.title.toUpperCase();
+    let x = a.artist[0].sortname.toUpperCase(),
+      y = b.artist[0].sortname.toUpperCase();
     return x == y ? 0 : x > y ? 1 : -1;
 
   });
   et.innerHTML = "";
-
   console.log(st);
+  
   for (let i = 0; i < st.length; i++) {
 
-    let t = "<em>"+st[i].title+"</em> By: <em>"+st[i].author+"</em>";
     let e = document.createElement("li");
     let iger = document.createElement("img");
     let delbut = document.createElement("button");
@@ -42,10 +41,9 @@ function dostuff() {
       localStorage.setItem("s", JSON.stringify(st));
       dostuff();
     });
-
+    
     iger.src = st[i].cover;
     iger.width = 150;
-    e.innerHTML = t;
     e.appendChild(delbut);
     e.appendChild(brd);
     e.appendChild(iger);
@@ -68,14 +66,13 @@ scabot.onclick = function () {
   });
 };
 Quagga.onDetected(async function (r) {
-  if ((r.codeResult.code > 9780000000000 && r.codeResult.code < 9800000000000 && !fer) || r.codeResult.code<1000000000) {
+  if (true) {
     document.getElementById("cameramodal").style.display = "none";
     Quagga.stop();
-    var x = await Book(r);
+    var x = await CD(r);
     let img = document.getElementById("igerite");
     img.src = x.cover;
     document.getElementById("title").innerHTML = x.title;
-    document.getElementById("author").innerHTML = x.author;
     document.getElementById("yesay").onclick = function () {
       st.push(x);
       let ser = JSON.stringify(st);
@@ -89,7 +86,12 @@ Quagga.onDetected(async function (r) {
     document.getElementById("nosay").onclick = function () { document.getElementById("myModal").style.display = "none"; };
     document.getElementById("myModal").style.display = "block";
     console.log(x);
-
+    let list = document.getElementById("persons");
+    for(let i=0;i<x.artists.length;i++){
+      let it = document.createElement("li");
+      it.innerHTML = x.artists[i].name;
+      list.appendChild(it);
+    }
 
     console.log("found");
   } console.log(r.codeResult.code);
@@ -103,18 +105,21 @@ const CD = async (data) => {
   var obj = await thing.json();
   obj = obj.releases[0];
   end.title = obj.title;
-  if(!obj.artist-credit){
+  if(!obj["artist-credit"]){
     end.artists = [{sortname:"Unknown",name:"Unknown"}];
   }
   else{
     end.artists =[];
-    for(let i = 0;i<obj["artist-credit"].length;i++){
-      end.artists[i].sortname=obj["artist-credit"][i].artist["sort-name"];
-      end.artists[i].name=obj["artist-credit"][i].artist["name"];
+    for(var i = 0;i<obj["artist-credit"].length;i++){
+      let oj = {};
+      oj.sortname=obj["artist-credit"][i].artist["sort-name"];
+      oj.name=obj["artist-credit"][i].artist["name"];
+      end.artists.push(oj);
+      console.log(i);
     }
   }
-  if (!obj.cover){end.cover=""}else{  end.cover = "https://coverartarchive.org/release-group/"+obj["release-group"].id+"/front-500";
-}
+    end.cover = "https://coverartarchive.org/release-group/"+obj["release-group"].id+"/front-500";
+
 
   Promise.resolve(end);
   return end;
