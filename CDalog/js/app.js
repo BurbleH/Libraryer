@@ -1,7 +1,7 @@
 var fer = false;
-if (!localStorage.getItem('s')) { localStorage.setItem('s', '[]'); }
+if (!localStorage.getItem("a")) { localStorage.setItem("a", '[]'); }
 
-const st = JSON.parse(localStorage.getItem('s'));
+const st = JSON.parse(localStorage.getItem("a"));
 var stoper = true;
 const initoptions = {
   inputStream: {
@@ -38,7 +38,7 @@ function dostuff() {
     delbut.innerHTML = "&times;";
     delbut.addEventListener("click", function () {
       st.splice(i, 1);
-      localStorage.setItem("s", JSON.stringify(st));
+      localStorage.setItem("a", JSON.stringify(st));
       dostuff();
     });
     
@@ -78,7 +78,7 @@ Quagga.onDetected(async function (r) {
       let ser = JSON.stringify(st);
       console.log(st);
       console.log(ser);
-      localStorage.setItem('s', ser);
+      localStorage.setItem("a", ser);
       document.getElementById("myModal").style.display = "none";
       dostuff();
 
@@ -98,7 +98,7 @@ Quagga.onDetected(async function (r) {
 });
 const CD = async (data) => {
   self.ean = data.codeResult.code;
-  let urlthing = "http://musicbrainz.org/ws/2/release/?query=barcode:"+self.ean+"&fmt=json";
+  let urlthing = "https://musicbrainz.org/ws/2/release/?query=barcode:"+self.ean+"&fmt=json";
   console.log(urlthing);
   let end = {};
   let thing = await fetch(urlthing);
