@@ -1,7 +1,7 @@
 var fer = false;
 if (!localStorage.getItem('s')) { localStorage.setItem('s', '[]'); }
 
-const st = JSON.parse(localStorage.getItem('s'));
+var st = JSON.parse(localStorage.getItem('s'));
 var stoper = true;
 const initoptions = {
   inputStream: {
