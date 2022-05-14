@@ -8,7 +8,7 @@ const initoptions = {
     name: "Live",
     type: "LiveStream",
     target: document.querySelector('#quagga'),
-    constraints:{
+    constraints: {
       facingMode: "environment",
     }  // Or '#yourElement' (optional)
   },
@@ -31,7 +31,7 @@ function dostuff() {
   console.log(st);
   for (let i = 0; i < st.length; i++) {
 
-    let t = "<em>"+st[i].title+"</em> By: <em>"+st[i].author+"</em>";
+    let t = "<em>" + st[i].title + "</em> By: <em>" + st[i].author + "</em>";
     let e = document.createElement("li");
     let iger = document.createElement("img");
     let delbut = document.createElement("button");
@@ -50,17 +50,18 @@ function dostuff() {
     e.appendChild(brd);
     e.appendChild(iger);
     et.appendChild(e);
-    let sa=document.getElementById("save");
-    let curbul = new Blob([JSON.stringify(st, null, 2)], {type : 'application/json'});
-    console.log("potato")
-    var curbulink = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(st));    console.log(curbulink);
-    sa.addEventListener("click", function(){
-      let lin = document.getElementById("alink");
-      lin.href = curbulink;
-      lin.download="books.json";
-      lin.click();
-    });
-  }
+
+  });
+}
+let sa = document.getElementById("save");
+let curbul = new Blob([JSON.stringify(st, null, 2)], { type: 'application/json' });
+console.log("potato")
+var curbulink = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(st)); console.log(curbulink);
+sa.addEventListener("click", function () {
+  let lin = document.getElementById("alink");
+  lin.href = curbulink;
+  lin.download = "books.json";
+  lin.click();
 }
 
 let scabot = document.getElementById("scanbut");
@@ -78,7 +79,7 @@ scabot.onclick = function () {
   });
 };
 Quagga.onDetected(async function (r) {
-  if ((r.codeResult.code > 9780000000000 && r.codeResult.code < 9800000000000 && !fer) || r.codeResult.code<1000000000) {
+  if ((r.codeResult.code > 9780000000000 && r.codeResult.code < 9800000000000 && !fer) || r.codeResult.code < 1000000000) {
     document.getElementById("cameramodal").style.display = "none";
     Quagga.stop();
     var x = await Book(r);
@@ -113,10 +114,11 @@ const Book = async (data) => {
   var obj = await thing.json();
   obj = obj["ISBN:" + self.isbn + ""];
   end.title = obj.title;
-  if(!obj.authors){end.author = "Unknown";}else{end.author = obj.authors[0].name;}
+  if (!obj.authors) { end.author = "Unknown"; } else { end.author = obj.authors[0].name; }
 
-  if (!obj.cover){end.cover=""}else{  end.cover = obj.cover.medium;
-}
+  if (!obj.cover) { end.cover = "" } else {
+    end.cover = obj.cover.medium;
+  }
 
   Promise.resolve(end);
   return end;

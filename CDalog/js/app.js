@@ -8,7 +8,7 @@ const initoptions = {
     name: "Live",
     type: "LiveStream",
     target: document.querySelector('#quagga'),
-    constraints:{
+    constraints: {
       facingMode: "environment",
     }  // Or '#yourElement' (optional)
   },
@@ -28,7 +28,7 @@ function dostuff() {
   });
   et.innerHTML = "";
   console.log(st);
-  
+
   for (let i = 0; i < st.length; i++) {
 
     let e = document.createElement("li");
@@ -42,17 +42,8 @@ function dostuff() {
       dostuff();
     });
 
-    let sa=document.getElementById("save");
-    let curbul = new Blob([JSON.stringify(st, null, 2)], {type : 'application/json'});
-    console.log("potato")
-    var curbulink = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(st));    console.log(curbulink);
-    sa.addEventListener("click", function(){
-      let lin = document.getElementById("alink");
-      lin.href = curbulink;
-      lin.download="cds.json";
-      lin.click();
-    });
-    
+
+
     iger.src = st[i].cover;
     iger.width = 150;
     e.appendChild(delbut);
@@ -60,6 +51,16 @@ function dostuff() {
     e.appendChild(iger);
     et.appendChild(e);
   }
+  let sa = document.getElementById("save");
+  let curbul = new Blob([JSON.stringify(st, null, 2)], { type: 'application/json' });
+  console.log("potato")
+  var curbulink = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(st)); console.log(curbulink);
+  sa.addEventListener("click", function () {
+    let lin = document.getElementById("alink");
+    lin.href = curbulink;
+    lin.download = "cds.json";
+    lin.click();
+  });
 }
 
 let scabot = document.getElementById("scanbut");
@@ -98,7 +99,7 @@ Quagga.onDetected(async function (r) {
     document.getElementById("myModal").style.display = "block";
     console.log(x);
     let list = document.getElementById("persons");
-    for(let i=0;i<x.artists.length;i++){
+    for (let i = 0; i < x.artists.length; i++) {
       let it = document.createElement("li");
       it.innerHTML = x.artists[i].name;
       list.appendChild(it);
@@ -109,27 +110,27 @@ Quagga.onDetected(async function (r) {
 });
 const CD = async (data) => {
   self.ean = data.codeResult.code;
-  let urlthing = "https://musicbrainz.org/ws/2/release/?query=barcode:"+self.ean+"&fmt=json";
+  let urlthing = "https://musicbrainz.org/ws/2/release/?query=barcode:" + self.ean + "&fmt=json";
   console.log(urlthing);
   let end = {};
   let thing = await fetch(urlthing);
   var obj = await thing.json();
   obj = obj.releases[0];
   end.title = obj.title;
-  if(!obj["artist-credit"]){
-    end.artists = [{sortname:"Unknown",name:"Unknown"}];
+  if (!obj["artist-credit"]) {
+    end.artists = [{ sortname: "Unknown", name: "Unknown" }];
   }
-  else{
-    end.artists =[];
-    for(var i = 0;i<obj["artist-credit"].length;i++){
+  else {
+    end.artists = [];
+    for (var i = 0; i < obj["artist-credit"].length; i++) {
       let oj = {};
-      oj.sortname=obj["artist-credit"][i].artist["sort-name"];
-      oj.name=obj["artist-credit"][i].artist["name"];
+      oj.sortname = obj["artist-credit"][i].artist["sort-name"];
+      oj.name = obj["artist-credit"][i].artist["name"];
       end.artists.push(oj);
       console.log(i);
     }
   }
-    end.cover = "https://coverartarchive.org/release-group/"+obj["release-group"].id+"/front-500";
+  end.cover = "https://coverartarchive.org/release-group/" + obj["release-group"].id + "/front-500";
 
 
   Promise.resolve(end);
