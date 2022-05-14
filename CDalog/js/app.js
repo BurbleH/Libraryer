@@ -45,7 +45,7 @@ function dostuff() {
     let sa=document.getElementById("save");
     let curbul = new Blob([JSON.stringify(st, null, 2)], {type : 'application/json'});
     console.log("potato")
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(storageObj));    console.log(curbulink);
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(st));    console.log(curbulink);
     sa.addEventListener("click", function(){
       let lin = document.getElementById("alink");
       lin.href = curbulink;
