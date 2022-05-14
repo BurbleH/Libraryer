@@ -130,7 +130,7 @@ fileSelector.addEventListener('change', (event) => {
   const file = event.target.files[0];
   const reader = new FileReader();
 
-  if (file.type) {
+  if (true) {
     console.log("we love uploads");
     console.log("always read your books");
     reader.addEventListener('load', event => {
