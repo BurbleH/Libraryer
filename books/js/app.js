@@ -50,6 +50,16 @@ function dostuff() {
     e.appendChild(brd);
     e.appendChild(iger);
     et.appendChild(e);
+    let sa=document.getElementById("save");
+    let curbul = new Blob([JSON.stringify(st, null, 2)], {type : 'application/json'});
+    console.log("potato")
+    var curbulink = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(st));    console.log(curbulink);
+    sa.addEventListener("click", function(){
+      let lin = document.getElementById("alink");
+      lin.href = curbulink;
+      lin.download="books.json";
+      lin.click();
+    });
   }
 }
 
