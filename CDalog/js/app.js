@@ -1,7 +1,7 @@
 var fer = false;
 if (!localStorage.getItem("a")) { localStorage.setItem("a", '[]'); }
 
-const st = JSON.parse(localStorage.getItem("a"));
+var st = JSON.parse(localStorage.getItem("a"));
 var stoper = true;
 const initoptions = {
   inputStream: {
@@ -58,7 +58,7 @@ function dostuff() {
   sa.addEventListener("click", function () {
     let lin = document.getElementById("alink");
     lin.href = curbulink;
-    lin.download = "cds.json";
+    lin.download = "cds.cattle";
     lin.click();
   });
 }
@@ -138,5 +138,19 @@ const CD = async (data) => {
 
 
 }
-
+const fileSelector = document.getElementById('filer');
+fileSelector.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (file.type.match('application.json')) {
+    console.log("we love uploads");
+    var reader = new FileReader();
+    console.log("always read your books");
+    reader.addEventListener('load', event => {
+      console.log("file uploads are satasfactory");
+      st = st.concat(st, JSON.parse(event.target.result));
+      dostuff();
+    });
+  }
+reader.readAsText(file);
+});
 dostuff();
