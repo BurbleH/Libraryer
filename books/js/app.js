@@ -51,7 +51,7 @@ function dostuff() {
     e.appendChild(iger);
     et.appendChild(e);
 
-  });
+  };
 }
 let sa = document.getElementById("save");
 let curbul = new Blob([JSON.stringify(st, null, 2)], { type: 'application/json' });
@@ -62,7 +62,7 @@ sa.addEventListener("click", function () {
   lin.href = curbulink;
   lin.download = "books.json";
   lin.click();
-}
+});
 
 let scabot = document.getElementById("scanbut");
 scabot.removeAttribute("disabled");
