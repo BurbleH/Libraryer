@@ -44,13 +44,14 @@ function dostuff() {
 
     let sa=document.getElementById("save");
     let curbul = new Blob([JSON.stringify(st, null, 2)], {type : 'application/json'});
-    let curbulink = URL.createObjectURL(curbul);
-    sa.onClick = function(){
-      let lin = document.createElement("a");
+    console.log("potato")
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(storageObj));    console.log(curbulink);
+    sa.addEventListener("click", function(){
+      let lin = document.getElementById("alink");
       lin.href = curbulink;
       lin.download="cds.json";
       lin.click();
-    }
+    });
     
     iger.src = st[i].cover;
     iger.width = 150;
