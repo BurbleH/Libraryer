@@ -32,6 +32,7 @@ function dostuff() {
   for (let i = 0; i < st.length; i++) {
 
     let e = document.createElement("li");
+    e.innerHTML=st[i].title;
     let iger = document.createElement("img");
     let delbut = document.createElement("button");
     let brd = document.createElement("br");
