@@ -60,7 +60,7 @@ var curbulink = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.string
 sa.addEventListener("click", function () {
   let lin = document.getElementById("alink");
   lin.href = curbulink;
-  lin.download = "books.json";
+  lin.download = "books.cattle";
   lin.click();
 });
 
@@ -125,4 +125,19 @@ const Book = async (data) => {
 
 
 }
+const fileSelector = document.getElementById('filer');
+fileSelector.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (file.type) {
+    console.log("we love uploads");
+    var reader = new FileReader();
+    console.log("always read your books");
+    reader.addEventListener('load', event => {
+      console.log("file uploads are satasfactory");
+      st = st.concat(st, JSON.parse(event.target.result));
+      dostuff();
+    });
+  }
+reader.readAsText(file);
+});
 dostuff();

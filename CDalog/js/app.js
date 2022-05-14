@@ -141,7 +141,7 @@ const CD = async (data) => {
 const fileSelector = document.getElementById('filer');
 fileSelector.addEventListener('change', (event) => {
   const file = event.target.files[0];
-  if (file.type.match('application.json')) {
+  if (file.type) {
     console.log("we love uploads");
     var reader = new FileReader();
     console.log("always read your books");

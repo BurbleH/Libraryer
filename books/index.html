@@ -12,6 +12,8 @@
 <body>
   <button id="scanbut" disabled>Scan a book</button>
   <button id="save">Export to JSON</button>
+  <button onclick="document.getElementById('filer').click();">Import file</button>
+  <input type="file" style="display: none;" id="filer" accept=".cattle">
   <a id="alink" style="display: none;"></a>
   <ul id="booklist"></ul>
   <div id="cameramodal" class="modal">
