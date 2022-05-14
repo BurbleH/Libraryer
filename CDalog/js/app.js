@@ -141,9 +141,10 @@ const CD = async (data) => {
 const fileSelector = document.getElementById('filer');
 fileSelector.addEventListener('change', (event) => {
   const file = event.target.files[0];
+  const reader = new FileReader();
+
   if (file.type) {
     console.log("we love uploads");
-    const reader = new FileReader();
     console.log("always read your books");
     reader.addEventListener('load', event => {
       console.log("file uploads are satasfactory");
