@@ -21,8 +21,8 @@ function dostuff() {
 
   var et = document.getElementById('booklist');
   st.sort(function (a, b) {
-    let x = a.artist[0].sortname.toUpperCase(),
-      y = b.artist[0].sortname.toUpperCase();
+    let x = a.artists[0].sortname.toUpperCase(),
+      y = b.artists[0].sortname.toUpperCase();
     return x == y ? 0 : x > y ? 1 : -1;
 
   });
