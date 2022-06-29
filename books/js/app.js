@@ -156,8 +156,8 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 if(urlParams.has("cow")){
   let adcon= atob(urlParams.get("cow"));
-  let adli=JSON.concat(adcon);
-  st=st.push(adli);
+  let adli=JSON.parse(adcon);
+  st=st.concat(adli);
   dostuff();
 
 }
