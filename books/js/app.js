@@ -32,7 +32,7 @@ function dostuff() {
   for (let i = 0; i < st.length; i++) {
 
     let t = "<em>" + st[i].title + "</em> By: <em>" + st[i].author + "</em>";
-    let e = document.createElement("li");
+    let e = document.createElement("div");
     let iger = document.createElement("img");
     let delbut = document.createElement("button");
     let brd = document.createElement("br");
