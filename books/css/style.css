@@ -21,5 +21,8 @@
     width: 80%; /* Could be more or less, depending on screen size */
   }
   #quagga {
-      display: block;
+      display: inline;
   }
+#booklist {
+  display:grid;
+}
