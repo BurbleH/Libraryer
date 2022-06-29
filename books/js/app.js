@@ -158,5 +158,6 @@ if(urlParams.has("cow")){
   let adcon= atob(urlParams.get("cow"));
   let adli=JSON.concat(adcon);
   st=st.push(adli);
+  dostuff();
 
 }
