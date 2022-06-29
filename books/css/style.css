@@ -24,7 +24,7 @@
       display: inline;
   }
 #booklist {
-  display:grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  flex-wrap: wrap;
 
 }
