@@ -157,7 +157,7 @@ const urlParams = new URLSearchParams(queryString);
 if(urlParams.has("cow")){
   let adcon= atob(urlParams.get("cow"));
   let adli=JSON.parse(adcon);
-  st=st.concat(adli);
+  st.concat(adli);
   dostuff();
 
 }
