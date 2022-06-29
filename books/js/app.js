@@ -1,5 +1,9 @@
 var fer = false;
+
+
+
 if (!localStorage.getItem('s')) { localStorage.setItem('s', '[]'); }
+
 
 var st = JSON.parse(localStorage.getItem('s'));
 var stoper = true;
@@ -21,8 +25,8 @@ function dostuff() {
 
   var et = document.getElementById('booklist');
   st.sort(function (a, b) {
-    let x = a.title.toUpperCase(),
-      y = b.title.toUpperCase();
+    let x = a.author.toUpperCase(),
+      y = b.author.toUpperCase();
     return x == y ? 0 : x > y ? 1 : -1;
 
   });
@@ -52,18 +56,21 @@ function dostuff() {
     et.appendChild(e);
 
   };
+  let encer = btoa(JSON.stringify(st));
+  let elt = kjua({text:"burbleH.github.io/books?cow="+encer});
+  document.getElementById("cont").innerHTML="";
+  document.getElementById("cont").appendChild(elt)
 }
 let sa = document.getElementById("save");
 let curbul = new Blob([JSON.stringify(st, null, 2)], { type: 'application/json' });
 console.log("potato")
-var curbulink = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(st)); console.log(curbulink);
 sa.addEventListener("click", function () {
+  let curbulink = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(st)); console.log(curbulink);
   let lin = document.getElementById("alink");
   lin.href = curbulink;
   lin.download = "books.cattle";
   lin.click();
 });
-
 let scabot = document.getElementById("scanbut");
 scabot.removeAttribute("disabled");
 scabot.onclick = function () {
@@ -139,6 +146,17 @@ fileSelector.addEventListener('change', (event) => {
       dostuff();
     });
   }
-reader.readAsText(file);
+  reader.readAsText(file);
 });
 dostuff();
+
+
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+if(urlParams.has("cow")){
+  let adcon= atob(urlParams.get("cow"));
+  let adli=JSON.concat(adcon);
+  st=st.push(adli);
+
+}
