@@ -56,8 +56,6 @@ function dostuff() {
     et.appendChild(e);
 
   };
-  let encer = btoa(JSON.stringify(st));
-  var elt = kjua({text:"burbleH.github.io/Libraryer/books?cow="+encer});
   document.getElementById("cont").innerHTML="";
   document.getElementById("cont").appendChild(elt)
 }
