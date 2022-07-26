@@ -147,17 +147,3 @@ fileSelector.addEventListener('change', (event) => {
   reader.readAsText(file);
 });
 dostuff();
-
-
-
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-if(urlParams.has("cow")){
-  let adcon= atob(urlParams.get("cow"));
-  let adli=JSON.parse(adcon);
-  st.concat(adli);
-  localStorage.setItem('s', JSON.stringify(st));
-
-  dostuff();
-
-}
