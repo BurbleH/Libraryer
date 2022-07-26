@@ -23,6 +23,7 @@ const initoptions = {
 };
 function dostuff() {
 
+
   var et = document.getElementById('booklist');
   st.sort(function (a, b) {
     let x = a.author.toUpperCase(),
@@ -56,7 +57,7 @@ function dostuff() {
     et.appendChild(e);
 
   };
-  document.getElementById("cont").innerHTML="";
+  document.getElementById("cont").innerHTML = "";
   document.getElementById("cont").appendChild(elt)
 }
 let sa = document.getElementById("save");
@@ -124,11 +125,13 @@ const Book = async (data) => {
   if (!obj.cover) { end.cover = "" } else {
     end.cover = obj.cover.medium;
   }
+  end.isbn = self.isbn;
+  end.genre = [];
+  for (let i = 0; i < obj.subjects.length; i++) { end.genre.push(obj.subjects[i].name); }
+  end.returned = obj
 
   Promise.resolve(end);
   return end;
-
-
 }
 const fileSelector = document.getElementById('filer');
 fileSelector.addEventListener('change', (event) => {
