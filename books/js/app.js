@@ -1,10 +1,5 @@
 var fer = false;
-
-
-
 if (!localStorage.getItem('s')) { localStorage.setItem('s', '[]'); }
-
-
 var st = JSON.parse(localStorage.getItem('s'));
 var stoper = true;
 const initoptions = {
@@ -25,17 +20,28 @@ function dostuff() {
 
 
   var et = document.getElementById('booklist');
+  let sorter = document.getElementById("sort");
   st.sort(function (a, b) {
-    let x = a.author.toUpperCase(),
-      y = b.author.toUpperCase();
-    return x == y ? 0 : x > y ? 1 : -1;
-
+    if (sorter.value = "author") {
+      let x = a.author.toUpperCase(),
+        y = b.author.toUpperCase();
+      return x == y ? 0 : x > y ? 1 : -1;
+    }
+    else if (sorter.value="date"){
+      let x = a.timeadded,y=b.timeadded;
+      return x == y ? 0 : x > y ? 1 : -1;
+    }
+    else if (sorter.value = "title") {
+      let x = a.title.toUpperCase(),
+        y = b.title.toUpperCase();
+      return x == y ? 0 : x > y ? 1 : -1;
+    }
   });
   et.innerHTML = "";
-
+  var filter = document.getElementById("filter");
   console.log(st);
   for (let i = 0; i < st.length; i++) {
-
+    
     let t = "<em>" + st[i].title + "</em> By: <em>" + st[i].author + "</em>";
     let e = document.createElement("div");
     let iger = document.createElement("img");
@@ -56,9 +62,8 @@ function dostuff() {
     e.appendChild(iger);
     et.appendChild(e);
 
-  };
+  }
   document.getElementById("cont").innerHTML = "";
-  document.getElementById("cont").appendChild(elt)
 }
 let sa = document.getElementById("save");
 let curbul = new Blob([JSON.stringify(st, null, 2)], { type: 'application/json' });
@@ -111,6 +116,12 @@ Quagga.onDetected(async function (r) {
     console.log("found");
   } console.log(r.codeResult.code);
 });
+function listname(lit = [], ner = "name") {
+  let retard = []
+  for (let oxer = 0; oxer < lit.length; oxer++) {
+    retard.push(lit[oxer["name"]]);
+  }
+}
 const Book = async (data) => {
   self.isbn = data.codeResult.code;
   let urlthing = "https://openlibrary.org/api/books?bibkeys=ISBN:" + self.isbn + "&jscmd=data&format=json";
@@ -126,10 +137,10 @@ const Book = async (data) => {
     end.cover = obj.cover.medium;
   }
   end.isbn = self.isbn;
-  end.genre = [];
-  for (let i = 0; i < obj.subjects.length; i++) { end.genre.push(obj.subjects[i].name); }
-  end.returned = obj
-
+  end.genre = listname(obj.subjects);
+  end.charchar = listname(obj.subject_people);
+  end.timeadded = Date.now();
+  end.places = listname(obj.subject_places)
   Promise.resolve(end);
   return end;
 }
