@@ -24,6 +24,12 @@
     <option value="author">Filter by author</option>
     <option value="genre">Filter by genre</option>
   </select>
+  <select name="catag" id="cat-input">
+    <option value="none">Don't Catagorize books</option>
+    <option value="author">Catagorize by Primary Author's name</option>
+    <option value="genre">Categorize by Genre</option>
+    <option value="shelf">Catagorize by Shelf</option>
+  </select>
 
   <input type="file" style="display: none;" id="filer" accept=".cattle">
   <a id="alink" style="display: none;"></a>
@@ -40,13 +46,14 @@
       <img id="igerite">
       <p>Title: <em id="title"></em></p>
       <p>Author: <em id="author"></em></p>
+      <p>Shelf: <input type="text" id="shelf" value="No Shelf"></p>
+      <div><label for="category">Category: </label><input type="text" name="category" id="cat-input" list="cat"><datalist id="cat"></datalist></div>
       <button id="nosay">No</button><button id="yesay">Yes</button>
     </div>
 
   </div>
   <div id="cont"></div>
-  <script src="js/quagga.min.js"></script>
-  <script src="js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>  <script src="js/app.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,9 @@
 var fer = false;
+//setup localstorage
 if (!localStorage.getItem('s')) { localStorage.setItem('s', '[]'); }
+//process localstorage
 var st = JSON.parse(localStorage.getItem('s'));
+//setup quagga
 var stoper = true;
 const initoptions = {
   inputStream: {
@@ -16,19 +19,20 @@ const initoptions = {
     debug: { drawBoundingBox: false }
   }
 };
+//define book org. function
 function dostuff() {
-
-
+  //retrieve elements
   var et = document.getElementById('booklist');
   let sorter = document.getElementById("sort");
+  //sort books in way defined by user
   st.sort(function (a, b) {
     if (sorter.value = "author") {
-      let x = a.author.toUpperCase(),
-        y = b.author.toUpperCase();
+      let x = a.authors.map(x => x.toUpperCase()).join(" "),
+        y = b.authors.map(x => x.toUpperCase()).join(" ");
       return x == y ? 0 : x > y ? 1 : -1;
     }
-    else if (sorter.value="date"){
-      let x = a.timeadded,y=b.timeadded;
+    else if (sorter.value = "date") {
+      let x = a.timeadded, y = b.timeadded;
       return x == y ? 0 : x > y ? 1 : -1;
     }
     else if (sorter.value = "title") {
@@ -37,12 +41,16 @@ function dostuff() {
       return x == y ? 0 : x > y ? 1 : -1;
     }
   });
+  //clear list of books
   et.innerHTML = "";
   var filter = document.getElementById("filter");
-  console.log(st);
+
+  //console.log(st);
+
+  //book list item creation
   for (let i = 0; i < st.length; i++) {
-    
-    let t = "<em>" + st[i].title + "</em> By: <em>" + st[i].author + "</em>";
+
+    let t = "<em>" + st[i].title + "</em> By: <em>" + st[i].authors.join(", ") + "</em>";
     let e = document.createElement("div");
     let iger = document.createElement("img");
     let delbut = document.createElement("button");
@@ -65,9 +73,12 @@ function dostuff() {
   }
   document.getElementById("cont").innerHTML = "";
 }
+
+//define saving feature
 let sa = document.getElementById("save");
+//define file
 let curbul = new Blob([JSON.stringify(st, null, 2)], { type: 'application/json' });
-console.log("potato")
+//event things. CATTLE file!
 sa.addEventListener("click", function () {
   let curbulink = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(st)); console.log(curbulink);
   let lin = document.getElementById("alink");
@@ -75,8 +86,11 @@ sa.addEventListener("click", function () {
   lin.download = "books.cattle";
   lin.click();
 });
+//get scanning button
 let scabot = document.getElementById("scanbut");
+//cut the ribbon
 scabot.removeAttribute("disabled");
+//just the normal onclick
 scabot.onclick = function () {
   console.log("starting");
   document.getElementById("cameramodal").style.display = "block";
@@ -89,26 +103,48 @@ scabot.onclick = function () {
     Quagga.start();
   });
 };
+//the juicy wonderful book catagorizor via ISBN code mechahnism
 Quagga.onDetected(async function (r) {
+  //are we actually looking at an ISBN code?
   if ((r.codeResult.code > 9780000000000 && r.codeResult.code < 9800000000000 && !fer) || r.codeResult.code < 1000000000) {
+    //stop recording
     document.getElementById("cameramodal").style.display = "none";
     Quagga.stop();
+    //our wonderful book item
     var x = await Book(r);
+    //cover element
     let img = document.getElementById("igerite");
+    //set cover
     img.src = x.cover;
+    //set all the text things
     document.getElementById("title").innerHTML = x.title;
-    document.getElementById("author").innerHTML = x.author;
+    document.getElementById("author").innerHTML = x.authors.join(", ");
+    
+    let cl=document.getElementById("cat");
+    x.genre.forEach(d=>cl.appendChild(document.createElement("option",value)))
+
+    //if the user accepts
+    
     document.getElementById("yesay").onclick = function () {
+      //add to book list
       st.push(x);
+      //make string
       let ser = JSON.stringify(st);
+      //debugging stuff
       console.log(st);
       console.log(ser);
+      //set to storage
       localStorage.setItem('s', ser);
+      //vanish modal
       document.getElementById("myModal").style.display = "none";
+      //resort
       dostuff();
 
     };
+    //if user declines
     document.getElementById("nosay").onclick = function () { document.getElementById("myModal").style.display = "none"; };
+
+    //display modal
     document.getElementById("myModal").style.display = "block";
     console.log(x);
 
@@ -117,10 +153,7 @@ Quagga.onDetected(async function (r) {
   } console.log(r.codeResult.code);
 });
 function listname(lit = [], ner = "name") {
-  let retard = []
-  for (let oxer = 0; oxer < lit.length; oxer++) {
-    retard.push(lit[oxer["name"]]);
-  }
+  return lit.map(x => x.name);
 }
 const Book = async (data) => {
   self.isbn = data.codeResult.code;
@@ -129,9 +162,11 @@ const Book = async (data) => {
   let end = {};
   let thing = await fetch(urlthing);
   var obj = await thing.json();
+  console.log(obj)
   obj = obj["ISBN:" + self.isbn + ""];
   end.title = obj.title;
-  if (!obj.authors) { end.author = "Unknown"; } else { end.author = obj.authors[0].name; }
+  end.authors = listname(obj.authors, "name");
+  if (end.authors = [""]) { end.authors = ["Unknown"]; }
 
   if (!obj.cover) { end.cover = "" } else {
     end.cover = obj.cover.medium;
